@@ -105,7 +105,6 @@ def register(request):
 
         if user_form.is_valid() and profile_form.is_valid():
             user = user_form.save()
-
             user.set_password(user.password)
             user.save()
 
@@ -115,12 +114,11 @@ def register(request):
             if 'picture' in request.FILES:
                 profile.picture = request.FILES['picture']
 
-            profile.save()
+                profile.save()
+                registered = True
 
-            registered = True
-
-        else:
-            print(user_form.errors, profile_form.errors)
+            else:
+                print(user_form.errors, profile_form.errors)
 
     else:
         user_form = UserForm()
