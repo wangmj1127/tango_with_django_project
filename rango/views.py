@@ -105,6 +105,7 @@ def register(request):
 
         if user_form.is_valid() and profile_form.is_valid():
             user = user_form.save()
+
             user.set_password(user.password)
             user.save()
 
@@ -142,13 +143,13 @@ def user_login(request):
                 login(request, user)
                 return HttpResponseRedirect(reverse('index'))
             else:
-                return HttpResponse("Your Rango account is disabled.")
+                return render(request, "rango/restricted.html", {"message": "Your Rango account is disabled."})
         else:
             print("Invalid login details: {0}, {1}".format(username, password))
-            return HttpResponse("Invalid login details supplied.")
+            return render(request, "rango/restricted.html", {"message": "Invalid login details supplied."})
 
     else:
-        return render(request, 'rango/login.html')
+        return render(request, 'rango/login.html', {})
 
 
 def some_view(request):
